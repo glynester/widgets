@@ -1,8 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
+import word from '../gbHelperFiles/randomWords';
+
+console.log("Word in Search", word)
 
 const Search=()=>{
-  const [term, setTerm]=useState('programming');
+  // const [term, setTerm]=useState('programming');
+  const [term, setTerm]=useState(word);
   const [debouncedTerm, setDebouncedTerm] = useState(term);
   const [results, setResults]=useState([]);
   // console.log("This runs with every term render");
@@ -11,14 +15,13 @@ const Search=()=>{
     const timerId =setTimeout(()=>{
       setDebouncedTerm(term);  // This triggers 2nd useEffect fn which runs when debouncedTerm changes.
     },1000);
-    // It term changes too quickly, clear the timeout and start another.
+    // If term changes too quickly, clear the timeout and start another.
     return ()=>{
       clearTimeout(timerId);
     }
   },[term]);      // Runs when term changes.
 
   useEffect(()=>{
-    // console.log("All renders");
    const search=async()=>{
     const { data } = await axios.get('https://en.wikipedia.org/w/api.php',{
       params: {
@@ -27,26 +30,12 @@ const Search=()=>{
         format: "json",
         origin: "*",
         srsearch: debouncedTerm
-        // srsearch: term
       }
     });
     setResults(data.query.search);
     console.log("result=>",results);
    };
    search();
-// Prevent delay on first search
-  //  if (term && !results.length){
-  //    search();    // No delay
-  //  } else {
-  //   const timeoutId=setTimeout(()=>{
-  //     if (term){ search(); }  // Only search if not blank.
-  //     }
-  //   ,1000);
-  //   return ()=>{
-  //     clearTimeout(timeoutId);
-  //   }
-  //  }
-
   }, [debouncedTerm]);    //<== NB
   // },[term, results.length])
   const updateTerm=(value)=>{
