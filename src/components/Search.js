@@ -4,7 +4,7 @@ import axios from 'axios';
 const Search=()=>{
   const [term, setTerm]=useState('programming');
   const [results, setResults]=useState([]);
-  // console.log("This runs with every term render");
+  console.log("This runs with every term render");
   useEffect(()=>{
     // console.log("All renders");
    const search=async()=>{
@@ -20,8 +20,20 @@ const Search=()=>{
     setResults(data.query.search);
     console.log("result=>",results);
    }
-  //  if (term){ search(); }  // Only search if not blank.
-  search()
+// Prevent delay on first search
+   if (term && !results.length){
+     search();    // No delay
+   } else {
+    const timeoutId=setTimeout(()=>{
+      if (term){ search(); }  // Only search if not blank.
+      }
+    ,1000);
+    return ()=>{
+      clearTimeout(timeoutId);
+    }
+   }
+
+   
   },[term])
   const updateTerm=(value)=>{
     setTerm(value);
