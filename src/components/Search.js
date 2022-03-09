@@ -3,8 +3,20 @@ import axios from 'axios';
 
 const Search=()=>{
   const [term, setTerm]=useState('programming');
+  const [debouncedTerm, setDebouncedTerm] = useState(term);
   const [results, setResults]=useState([]);
-  console.log("This runs with every term render");
+  // console.log("This runs with every term render");
+  useEffect(()=>{
+    // Queue up a change to "debouncedTerm"
+    const timerId =setTimeout(()=>{
+      setDebouncedTerm(term);  // This triggers 2nd useEffect fn which runs when debouncedTerm changes.
+    },1000);
+    // It term changes too quickly, clear the timeout and start another.
+    return ()=>{
+      clearTimeout(timerId);
+    }
+  },[term]);      // Runs when term changes.
+
   useEffect(()=>{
     // console.log("All renders");
    const search=async()=>{
@@ -14,27 +26,29 @@ const Search=()=>{
         list: "search",
         format: "json",
         origin: "*",
-        srsearch: term
+        srsearch: debouncedTerm
+        // srsearch: term
       }
     });
     setResults(data.query.search);
     console.log("result=>",results);
-   }
+   };
+   search();
 // Prevent delay on first search
-   if (term && !results.length){
-     search();    // No delay
-   } else {
-    const timeoutId=setTimeout(()=>{
-      if (term){ search(); }  // Only search if not blank.
-      }
-    ,1000);
-    return ()=>{
-      clearTimeout(timeoutId);
-    }
-   }
+  //  if (term && !results.length){
+  //    search();    // No delay
+  //  } else {
+  //   const timeoutId=setTimeout(()=>{
+  //     if (term){ search(); }  // Only search if not blank.
+  //     }
+  //   ,1000);
+  //   return ()=>{
+  //     clearTimeout(timeoutId);
+  //   }
+  //  }
 
-   
-  },[term])
+  }, [debouncedTerm]);    //<== NB
+  // },[term, results.length])
   const updateTerm=(value)=>{
     setTerm(value);
     // console.log("term",term);
