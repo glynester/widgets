@@ -14,7 +14,8 @@ const Dropdown=({options, onSelectedChange, selected})=>{
       setOpen(false);
     }
 
-    document.body.addEventListener('click',onBodyClick);
+    document.body.addEventListener('click',onBodyClick,
+    { capture: true });
     // Cleanup function below is invoked when component is about to be removed from the screen
     return ()=>{
       // We want to remove the addEventListener because if causes an error when the component is no longer there.
@@ -42,7 +43,7 @@ const Dropdown=({options, onSelectedChange, selected})=>{
     <div ref={ref} className="ui form">
       <div className="field">
         <label className="label">
-          Select a colour
+          {/* Select a colour */}
         </label>
         <div onClick={()=>{
             // console.log('Dropdown click!!!');
@@ -55,6 +56,7 @@ const Dropdown=({options, onSelectedChange, selected})=>{
           </div>
         </div>
       </div>
+      <div className='ui label' style={{color: `${selected.value}`}}>{`This text is ${selected.value}`} </div>
     </div>
   )
 }
