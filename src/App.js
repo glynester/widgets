@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Accordion from './components/Accordion';
 import Search from './components/Search';
 import Dropdown from './components/Dropdown';
+import Translate from './components/Translate';
 
 const items=[
   {title: 'What is React?',content: 'React is a front-end Javascript framework.'},
@@ -17,29 +18,22 @@ const options=[
 
 export default ()=>{
   const [selected, setSelected]=useState(options[0]);
-  const [showDropDown, setShowDropdown]=useState(true);
+  // const [showDropDown, setShowDropdown]=useState(true);
 
   return (
     <div>
       {/*    <Accordion items={items}/> */}
       {/* <Search /> */}
-      <button onClick={()=>{setShowDropdown(!showDropDown)}}>Toggle Dropdown</button>
-      { showDropDown ?
+      {/* <>
         <Dropdown 
-        selected={selected} 
-        onSelectedChange={setSelected} 
-        options={options} 
-      /> : null
-      }
+          label="Select a colour"
+          selected={selected} 
+          onSelectedChange={setSelected} 
+          options={options} 
+        />
+        <div className='ui label' style={{color: `${selected.value}`}}>{`This text is ${selected.value}`} </div>
+      </> */}
+      <Translate />
     </div>
   )
 }
-
-// class App extends React.Component {
-//   render() {
-//     return (
-//       <div>Widgets App</div>
-//     )}
-// }
-
-// export default App;
