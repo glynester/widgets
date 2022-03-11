@@ -5,14 +5,21 @@ const Dropdown=({options, onSelectedChange, selected})=>{
   const ref = useRef();
 
   useEffect(()=>{
-    document.body.addEventListener('click',(event)=>{
+    const onBodyClick = (event)=>{
       // console.log(event.target);
       // console.log('Body click!!!');
       if (ref.current.contains(event.target)){
         return;
       }
       setOpen(false);
-    },{ capture: true })
+    }
+
+    document.body.addEventListener('click',onBodyClick);
+    // Cleanup function below is invoked when component is about to be removed from the screen
+    return ()=>{
+      // We want to remove the addEventListener because if causes an error when the component is no longer there.
+      document.body.removeEventListener('click',onBodyClick);
+    }
   },[]);    // [] = only want this to run once.
 
   const renderedOptions=options.map(option=>{
