@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios'
 
 const Convert=({language, text})=>{
-  console.log("API==>",process.env.NODE_ENV);
+  // console.log("API==>",process.env.NODE_ENV);
   const [translated, setTranslated]=useState('');
   const [debouncedText, setDebouncedText]=useState(text);
 

@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import word from '../gbHelperFiles/randomWords';
+import {word} from '../gbHelperFiles/randomWords';
 
 console.log("Word in Search", word)
 

@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 
 const Accordion = ({items})=>{
   // Array destructuring
-  console.log("XXXX",useState(null))
+  // console.log("XXXX",useState(null))
   const [activeIndex, setActiveIndex] = useState(null);
 
   const onTitleClick=(index)=>{

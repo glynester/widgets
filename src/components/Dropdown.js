@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 
+
+
 const Dropdown=({label, options, onSelectedChange, selected})=>{
   const [open, setOpen]=useState(false);
   const ref = useRef();
@@ -22,9 +24,9 @@ const Dropdown=({label, options, onSelectedChange, selected})=>{
       document.body.removeEventListener('click',onBodyClick);
     }
   },[]);    // [] = only want this to run once.
-
   const renderedOptions=options.map(option=>{
     if (option.value === selected.value) { return null; }
+    
     return (
       <div 
         key={option.value} 
@@ -35,13 +37,26 @@ const Dropdown=({label, options, onSelectedChange, selected})=>{
         }} 
       >
         {option.label}
+        {window.location.pathname==='/translate'?null:
+        <div  
+          style = {{
+            display: 'inline-block',
+            height: '20px',
+            width: '20px',
+            backgroundColor: option.value,
+            border: '1px solid black',
+            marginLeft: '10px',
+            position: 'absolute',
+            top: '8px',
+          }}
+        />}
       </div>
     )
   })
   // console.log("ref",ref.current);
   return (
     <div ref={ref} className="ui form">
-      <div className="field">
+      <div className="four wide field">
         <label className="label">{label}
           {/* Select a colour */}
         </label>
@@ -50,7 +65,21 @@ const Dropdown=({label, options, onSelectedChange, selected})=>{
             setOpen(!open);
           }} className={`ui selection dropdown ${open?'visible active':''}`}>
           <i className="dropdown icon"></i>
-          <div className="text">{selected.label}</div>
+          <div className="text">{selected.label}
+          {window.location.pathname==='/translate'?null:
+            <div 
+              style = {{
+                display: 'inline-block',
+                height: '20px',
+                width: '20px',
+                border: '1px solid black',
+                backgroundColor: selected.value,
+                marginLeft: '10px',
+                position: 'absolute',
+                top: '8px',
+              }}
+            />}
+          </div>
           <div className={`menu ${open?'visible transition':''}`}>
             {renderedOptions}             
           </div>

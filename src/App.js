@@ -50,9 +50,9 @@ export default ()=>{
             onSelectedChange={setSelected} 
             options={options} 
           /> 
-            <div className='ui label' 
-              style={{color: `${selected.value}`}}>
-              {`This text is ${selected.value}`} 
+            <div className='ui raised padded text inverted segment' 
+              style={{marginTop:'10px', color: `${selected.value}`}}>
+              {`This text is "${selected.value}"`} 
             </div>
         </>
       </Route>
