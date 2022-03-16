@@ -4,6 +4,9 @@ import Search from './components/Search';
 import Dropdown from './components/Dropdown';
 import Translate from './components/Translate';
 import Route from './components/Route';
+import * as ConstsReqd from './gbHelperFiles/constants';
+import {getRandom} from './gbHelperFiles/gbHelper';
+import Header from './components/Header';
 
 const items=[
   {title: 'What is React?',content: 'React is a front-end Javascript framework.'},
@@ -11,11 +14,12 @@ const items=[
   {title:'How do you use React?',content:'You use React by creating components'}
 ]
 
-const options=[
-  {label:'The colour red', value:'red'},
-  {label:'The colour green', value:'green'},
-  {label:'A shade of blue', value:'blue'}
-]
+const options= ConstsReqd.COLOURS_LIST;
+// [
+//   {label:'The colour red', value:'red'},
+//   {label:'The colour green', value:'green'},
+//   {label:'A shade of blue', value:'blue'}
+// ]
 
 // Setting up manual navigation rather than using React-Router
 // const showAccordion=()=>{
@@ -25,11 +29,13 @@ const options=[
 // }
 
 export default ()=>{
-  const [selected, setSelected]=useState(options[0]);
+  const [selected, setSelected]=useState(getRandom(options,1)[0]);
+  // const [selected, setSelected]=useState(options[0]);
   // const [showDropDown, setShowDropdown]=useState(true);
 
   return (
     <div>
+      <Header />
       <Route path='/'>
         <Accordion items={items}/>
       </Route> 
